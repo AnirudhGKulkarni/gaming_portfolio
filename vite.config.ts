@@ -5,9 +5,9 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  // Use relative base so built assets work both at root and project subpaths.
-  // This avoids absolute `/` prefixes which can cause 404s on Pages.
-  base: "./",
+  // Use project subpath for GitHub Pages project site.
+  // Set to the repo name path so assets reference '/gaming_portfolio/...'
+  base: "/gaming_portfolio/",
   server: {
     host: "::",
     port: 8080,
