@@ -5,14 +5,14 @@ const contactLinks = [
   {
     icon: Mail,
     label: "Email",
-    value: "anirudhgkulkarni@email.com",
-    href: "mailto:anirudhgkulkarni@email.com",
+    value: "anigk22@gmail.com",
+    href: "mailto:anigk22@gmail.com",
   },
   {
     icon: Linkedin,
     label: "LinkedIn",
     value: "linkedin.com/in/anirudhgkulkarni",
-    href: "https://linkedin.com/in/anirudhgkulkarni",
+    href: "https://www.linkedin.com/in/anirudha-g-kulkarni-16381835b",
   },
   {
     icon: Github,

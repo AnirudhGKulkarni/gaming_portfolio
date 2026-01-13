@@ -9,16 +9,13 @@ export const Footer = () => {
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <a href="#home" className="flex items-center gap-2 text-lg font-bold">
             <Gamepad2 className="w-5 h-5 text-primary" />
-            <span className="text-gradient">AGK</span>
+            <span className="text-gradient">ANI</span>
           </a>
 
           <p className="text-sm text-muted-foreground flex items-center gap-1">
-            Made with <Heart className="w-4 h-4 text-primary" /> by Anirudh G Kulkarni
+            Made with <Heart className="w-4 h-4 text-primary" /> by Anirudha G Kulkarni
           </p>
 
-          <p className="text-sm text-muted-foreground">
-            © {currentYear} All rights reserved.
-          </p>
         </div>
       </div>
     </footer>

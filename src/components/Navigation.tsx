@@ -34,7 +34,7 @@ export const Navigation = () => {
         <div className="flex items-center justify-between h-16 lg:h-20">
           <a href="#home" className="flex items-center gap-2 text-xl font-bold">
             <Gamepad2 className="w-6 h-6 text-primary" />
-            <span className="text-gradient">AGK</span>
+            <span className="text-gradient">ANI</span>
           </a>
 
           {/* Desktop Navigation */}
