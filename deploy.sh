@@ -1,45 +1,40 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
-# Build and deploy to GitHub Pages as a project page under /gaming_portfolio/
-# This script builds with the correct base and copies the output into `docs/` on `main`.
+# Exit immediately if any command fails
+set -e
 
-set -euo pipefail
+echo "🚀 Starting deployment for gaming_portfolio..."
 
-BRANCH="${1:-main}"
-REMOTE="${2:-origin}"
-BASE="${BASE:-/gaming_portfolio/}"
-COMMIT_MSG="chore: deploy docs (build with base ${BASE})"
-
-echo "📦 Building the project with base=${BASE}..."
-# Pass base via CLI to ensure build uses the project subpath regardless of vite.config
-npm run build -- --base "$BASE"
-
-BUILD_DIR="dist"
-DOCS_DIR="docs"
-
-if [ ! -d "$BUILD_DIR" ]; then
-	echo "Build directory '$BUILD_DIR' not found. Exiting." >&2
-	exit 1
+# Ensure we are in repo root
+if [ ! -f "vite.config.ts" ]; then
+  echo "❌ Error: vite.config.ts not found. Run this script from the repo root."
+  exit 1
 fi
 
-echo "🔁 Replacing '$DOCS_DIR' with built output..."
-rm -rf "$DOCS_DIR"
-mkdir -p "$DOCS_DIR"
-cp -r "$BUILD_DIR"/. "$DOCS_DIR"/
+# Build the project
+echo "📦 Building project..."
+npm run build
 
-echo "⚙️ Creating .nojekyll to avoid ignoring files/folders starting with _"
-touch "$DOCS_DIR/.nojekyll"
+# Replace docs folder
+echo "🧹 Updating docs/ folder..."
+rm -rf docs
+mkdir docs
+cp -r dist/* docs/
 
-echo "📁 Staging '$DOCS_DIR'..."
-git add -A "$DOCS_DIR"
-
-if git diff --staged --quiet; then
-	echo "No changes detected in '$DOCS_DIR'. Nothing to commit."
-else
-	git commit -m "$COMMIT_MSG"
-	echo "Pushing '$DOCS_DIR' to $REMOTE/$BRANCH..."
-	git push "$REMOTE" "HEAD:$BRANCH"
-	echo "✅ Deployed docs to $REMOTE/$BRANCH"
+# Basic verification
+if [ ! -f "docs/index.html" ]; then
+  echo "❌ Build failed: docs/index.html not found."
+  exit 1
 fi
 
-echo "Done. If Pages is set to 'main /docs', visit: https://anirudhgkulkarni.github.io/gaming_portfolio/"
+echo "✅ Build copied to docs/ successfully."
+
+echo ""
+echo "👉 Next steps:"
+echo "1. Open GitHub Desktop"
+echo "2. Commit changes in docs/"
+echo "3. Push to main branch"
+echo "4. Wait 1–3 minutes for GitHub Pages to update"
+echo ""
+echo "🌐 Live URL:"
+echo "https://anirudhgkulkarni.github.io/gaming_portfolio/"
