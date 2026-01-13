@@ -13,7 +13,17 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
+      {/* Determine basename for BrowserRouter so routes work on GitHub Pages */}
+      {/* import.meta.env.BASE_URL is set by Vite (e.g. '/gaming_portfolio/' or './') */}
+      {(() => {
+        let base = import.meta.env.BASE_URL || "/";
+        if (base === "./") {
+          base = "/gaming_portfolio/";
+        }
+        // remove trailing slash for BrowserRouter basename
+        base = base.replace(/\/$/, "");
+        return <BrowserRouter basename={base}>;
+      })()}
         <Routes>
           <Route path="/" element={<Index />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
