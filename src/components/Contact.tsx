@@ -1,4 +1,4 @@
-import { Mail, Linkedin, Github, Globe, Send } from "lucide-react";
+import { Mail, Linkedin, Github, Globe, Send, PhoneCall } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const contactLinks = [
@@ -21,10 +21,10 @@ const contactLinks = [
     href: "https://github.com/anirudhgkulkarni",
   },
   {
-    icon: Globe,
-    label: "Portfolio",
-    value: "anirudhgkulkarni.github.io",
-    href: "https://anirudhgkulkarni.github.io",
+    icon: PhoneCall,
+    label: "Phone",
+    value: "9481809195",
+    href: "tel:+919481809195",
   },
 ];
 
