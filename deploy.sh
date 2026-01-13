@@ -1,28 +1,45 @@
 #!/usr/bin/env bash
 
-# Exit immediately if a command exits with an error
+# Build and deploy to GitHub Pages as a project page under /gaming_portfolio/
+# This script builds with the correct base and copies the output into `docs/` on `main`.
+
 set -euo pipefail
 
-echo "📦 Building the project..."
-npm run build
+BRANCH="${1:-main}"
+REMOTE="${2:-origin}"
+BASE="${BASE:-/gaming_portfolio/}"
+COMMIT_MSG="chore: deploy docs (build with base ${BASE})"
 
-cd dist
+echo "📦 Building the project with base=${BASE}..."
+# Pass base via CLI to ensure build uses the project subpath regardless of vite.config
+npm run build -- --base "$BASE"
+
+BUILD_DIR="dist"
+DOCS_DIR="docs"
+
+if [ ! -d "$BUILD_DIR" ]; then
+	echo "Build directory '$BUILD_DIR' not found. Exiting." >&2
+	exit 1
+fi
+
+echo "🔁 Replacing '$DOCS_DIR' with built output..."
+rm -rf "$DOCS_DIR"
+mkdir -p "$DOCS_DIR"
+cp -r "$BUILD_DIR"/. "$DOCS_DIR"/
 
 echo "⚙️ Creating .nojekyll to avoid ignoring files/folders starting with _"
-touch .nojekyll
+touch "$DOCS_DIR/.nojekyll"
 
-echo "🔧 Initializing Git in dist folder..."
-git init
-git checkout -b main
-git add .
-git commit -m "Deploy to GitHub Pages"
+echo "📁 Staging '$DOCS_DIR'..."
+git add -A "$DOCS_DIR"
 
-echo "🚀 Pushing to GitHub Pages repo..."
-# Override the remote URL below if needed
-REMOTE_REPO="${REMOTE_REPO:-https://github.com/AnirudhGKulkarni/anirudhgkulkarni.github.io.git}"
-git remote add origin "$REMOTE_REPO"
-git push -f origin main
+if git diff --staged --quiet; then
+	echo "No changes detected in '$DOCS_DIR'. Nothing to commit."
+else
+	git commit -m "$COMMIT_MSG"
+	echo "Pushing '$DOCS_DIR' to $REMOTE/$BRANCH..."
+	git push "$REMOTE" "HEAD:$BRANCH"
+	echo "✅ Deployed docs to $REMOTE/$BRANCH"
+fi
 
-cd ..
-
-echo "✅ Deployed Successfully! Visit https://anirudhgkulkarni.github.io"
+echo "Done. If Pages is set to 'main /docs', visit: https://anirudhgkulkarni.github.io/gaming_portfolio/"
