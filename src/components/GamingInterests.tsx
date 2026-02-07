@@ -108,7 +108,7 @@ const GamesAccordion = () => {
     {
       title: "Action / Open World",
       games: [
-        "Assassin’s Creed (I, II, Brotherhood, Revelations, III, Black Flag, Freedom Cry, Rogue)",
+        "Assassin’s Creed (I, II, Brotherhood, Revelations, III, Black Flag, Freedom Cry, Rogue, Unity, Syndicate)",
         "GTA III",
         "GTA Vice City",
         "GTA San Andreas",
